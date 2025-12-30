@@ -2,14 +2,17 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 
+require('dotenv').config();
+
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const connectToMongoDB = require('./services/mongoConnection');
 const staticRouter = require('./routers/static.router');
 const authRouter = require('./routers/auth.router');
 
 // Connect to MongoDB
-connectToMongoDB();
+const mongoUri = process.env.MONGO_URI;
+connectToMongoDB(mongoUri);
 
 // Middleware to parse JSON bodies
 app.use(express.json());

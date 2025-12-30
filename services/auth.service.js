@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
-const SECRET_KEY = 'skillgatedsecretkey';
+const SECRET_KEY = process.env.SECRET_KEY || 'your-secret-key';
 
 async function registerUser({ name, email, password, role }) {
     hashPassword = await bcrypt.hash(password, 10);
