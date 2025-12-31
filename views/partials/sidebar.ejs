@@ -1,0 +1,17 @@
+<div class="sidebar">
+    <h2>Dashboard</h2>
+
+    <% if (user.role==='STUDENT' ) { %>
+        <a href="/student/dashboard">Home</a>
+        <a href="/student/tasks">My Tasks</a>
+        <a href="/student/profile">Profile</a>
+        <% } %>
+
+            <% if (user.role==='org' ) { %>
+                <a href="/org/dashboard">Home</a>
+                <a href="/org/post-task">Post Task</a>
+                <a href="/org/students">Students</a>
+                <% } %>
+
+                    <a href="/logout">Logout</a>
+</div>

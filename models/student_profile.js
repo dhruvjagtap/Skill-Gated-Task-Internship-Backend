@@ -1,4 +1,4 @@
-const mongoose = require('mongooose');
+const mongoose = require('mongoose');
 
 const studentProfileSchema = new mongoose.Schema({
     userId: {
@@ -15,8 +15,8 @@ const studentProfileSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    graduationYear: {
-        type: Number,
+    yearOfStudy: {
+        type: String,
         required: true
     },
     activeTaskCount: {

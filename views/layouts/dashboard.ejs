@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>
+        <%= typeof title !=='undefined' ? title : 'Dashboard' %>
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #fff;
+            color: #000;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 220px;
+            background: #000;
+            color: #fff;
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 30px;
+            font-size: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .sidebar a:hover {
+            text-decoration: underline;
+        }
+
+        /* MAIN */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #000;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            background-color: #000;
+            color: #fff;
+            gap: 15px;
+        }
+
+        .menu-btn {
+            display: none;
+            font-size: 20px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #000;
+        }
+
+        .content {
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* FORM */
+        input,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #000;
+            background: #fff;
+            color: #000;
+        }
+
+        button {
+            background: #000;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #333;
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                transform: translateX(-100%);
+                z-index: 1000;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <%- include('../partials/sidebar') %>
+
+        <div class="main">
+            <header>
+                <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+                Skill Gated Task Internship
+            </header>
+
+            <div class="content">
+                <%- body %>
+            </div>
+
+            <%- include('../partials/footer') %>
+        </div>
+
+        <script>
+            function toggleSidebar() {
+                document.querySelector('.sidebar').classList.toggle('open');
+            }
+        </script>
+
+</body>
+
+</html>

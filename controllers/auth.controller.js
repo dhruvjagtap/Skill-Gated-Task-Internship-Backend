@@ -7,16 +7,18 @@ async function studentRegister(req, res) {
     if (!name || !email || !password) return res.status(400).render('auth/register', { role: 'Student', error: 'All fields are required' });
 
     try {
-        const user = await User.findOne({ email });
+        const existingUser = await User.findOne({ email });
 
-        if (user) return res.status(400).render('auth/register', { role: 'Student', action: '/auth/student/register', error: 'User already exists' });
+        if (existingUser) return res.status(400).render('auth/register', { role: 'Student', action: '/auth/student/register', error: 'User already exists' });
 
-        await registerUser({
+        const user = await registerUser({
             name,
             email,
             password,
             role: 'STUDENT'
         })
+
+        res.user = user;
 
         return res.redirect('/student/dashboard');
     } catch (error) {
@@ -70,21 +72,21 @@ async function createAdmin(req, res) {
 
 async function login(req, res) {
     const { email, password } = req.body;
-    if (!email || !password) return res.status(400).render('auth/login', { error: 'All fields are required' });
+    if (!email || !password) return res.status(400).render('/login', { error: 'All fields are required' });
 
     try {
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(404).render('auth/login', { error: 'User not found' });
+            return res.render('auth/login');
         }
 
         if (user.status === 'SUSPENDED') {
-            return res.status(403).render('auth/login', { error: 'Account suspended' });
+            return res.redirect('/login');
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            return res.status(401).render('auth/login', { error: 'Invalid credentials' });
+            return res.render('auth/login', { layout: false, error: 'Invalid email or password' });
         }
 
         const token = setUser(user)

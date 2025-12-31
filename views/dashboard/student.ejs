@@ -1,0 +1,16 @@
+<% if (!profileComplete) { %>
+    <h2>Welcome, <%= user.name %>
+    </h2>
+    <p>Please complete your profile to continue.</p>
+
+    <form method="POST" action="/student/complete-profile">
+        <input type="text" name="university" placeholder="University" required />
+        <input type="text" name="degree" placeholder="Degree" required />
+        <input type="text" name="yearOfStudy" placeholder="Year of Study" required />
+        <button type="submit">Complete Profile</button>
+    </form>
+    <% } else { %>
+        <h2>Welcome back, <%= user.name %>
+        </h2>
+        <p>Your dashboard overview.</p>
+        <% } %>

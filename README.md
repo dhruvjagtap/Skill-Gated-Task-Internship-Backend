@@ -6,6 +6,50 @@ A backend system that enables students to earn and gain experience through skill
 ![status](https://img.shields.io/badge/status-Development-blue)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose-brightgreen)
 
+## <b>Project Motivation & Problem Statement</b>
+
+Today, many students seek practical experience and income through freelancing platforms. However, most existing platforms are **unstructured**, **academically unsafe**, and **skill-unverified**. Students often take on open-ended work, compete unfairly, or overwork themselves at the cost of their academics.
+
+At the same time, organizations and startups struggle to find reliable, skill-verified students for short-term tasks and internships without committing to long hiring processes.
+
+This project was created to solve that gap.
+
+The **Skill-Gated Task & Internship Backend API** is designed as a controlled, ethical alternative to traditional freelancing platforms — one that prioritizes **skill verification**, **academic protection**, and **administrative oversight**.
+
+Instead of unrestricted gig work, this platform enforces:
+
+- Verified skills before task access
+- Fixed-scope, short-duration work
+- Strict limits to protect students’ academic commitments
+- Admin-reviewed workflows to ensure fairness and accountability
+
+## <b>Project Goals</b>
+
+The primary goals of this project are:
+- To design a real-world backend system with role-based workflows
+- To enforce business rules (academic safety, skill gating) at the API level
+- To demonstrate secure authentication, authorization, and data modeling
+- To simulate how large platforms manage multi-role approvals and lifecycle states
+
+This project focuses heavily on backend architecture, system design, and security, rather than UI or monetization.
+
+## <b>Why I Built This Project</b>
+
+This project was built to:
+- Practice production-style backend engineering
+- Understand RBAC, admin moderation systems, and approval workflows
+- Learn how to implement business constraints beyond CRUD operations
+- Showcase the ability to convert a real-world problem into a scalable API design
+
+It reflects how platforms like internship portals, internal task systems, or controlled gig platforms operate behind the scenes.
+
+## What Makes This Project Different?
+- Not a generic CRUD or to-do app
+- Enforces rules, limits, and approvals
+- Multi-role interaction (Student ↔ Organization ↔ Admin)
+- Focus on ethics, control, and safety
+- Designed to be easily extended into a full production system
+
   ## <b>Features</b> 
   
 - JWT-based Authentication & Role-Based Access Control (RBAC) 

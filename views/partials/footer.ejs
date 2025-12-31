@@ -1,0 +1,29 @@
+<style>
+    .footer {
+        margin-top: auto;
+        padding: 12px 20px;
+        border-top: 1px solid #000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 13px;
+        background: #fff;
+    }
+
+    .footer-right {
+        opacity: 0.7;
+    }
+
+    @media (max-width: 768px) {
+        .footer {
+            flex-direction: column;
+            gap: 5px;
+            text-align: center;
+        }
+    }
+</style>
+
+<footer class="footer">
+    <span>© <%= new Date().getFullYear() %> Skill Gated Task Internship</span>
+    <span class="footer-right">All rights reserved</span>
+</footer>
