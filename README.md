@@ -50,7 +50,7 @@ It reflects how platforms like internship portals, internal task systems, or con
 - Focus on ethics, control, and safety
 - Designed to be easily extended into a full production system
 
-  ## <b>Features</b> 
+## <b>Features</b> 
   
 - JWT-based Authentication & Role-Based Access Control (RBAC) 
 - Skill verification system with admin approval  
@@ -199,7 +199,7 @@ NODE_ENV=development
 
 **Step 1**: Clone the repository
 ```
-git clone https://github.com/your-username/skill-gated-backend.git
+git clone https://github.com/dhruvjagtap/Skill-Gated-Task-Internship-Backend.git
 cd skill-gated-backend
 ```
 
@@ -225,9 +225,9 @@ Server will run at http://localhost:3000
 
 ### Phase 1 – Core Backend (Current)
 - [x] Authentication & RBAC 
-- [ ] Skill verification system
-- [ ] Task & internship lifecycle
-- [ ] Academic safety rules
+- [x] Skill verification system
+- [x] Task & internship lifecycle
+- [x] Academic safety rules
 
 ### Phase 2 – Developer Experience
 - [ ] Postman collection for API testing

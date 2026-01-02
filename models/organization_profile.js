@@ -4,20 +4,31 @@ const organizationSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
+        required: true,
+        unique: true
+    },
+    organizationName: {
+        type: String,
         required: true
     },
+
     description: {
         type: String,
         required: true
     },
-    organizationAddress: {
+    verifiedAt: Date,
+
+    verificationStatus: {
         type: String,
-        required: true
+        enum: ['PENDING', 'VERIFIED', 'REJECTED'],
+        default: 'PENDING'
     },
-    contactNumber: {
-        type: String,
-        required: true
+
+    isVerified: {
+        type: Boolean,
+        default: false
     },
+    rejectionReason: String
 }, { timestamps: true });
 
 const OrganizationProfile = mongoose.model('OrganizationProfile', organizationSchema);

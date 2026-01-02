@@ -31,6 +31,8 @@ const studentProfileSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    isSuspended: { type: Boolean, default: false }
+
 }, { timestamps: true });
 
 const StudentProfile = mongoose.model('StudentProfile', studentProfileSchema);

@@ -1,30 +1,52 @@
 const { getUser } = require('../services/auth.service');
 
-function checkAuth(req, res, next) {
-    const token = req.cookies?.uid;
-    req.user = null;
-    if (!token) {
-        return res.redirect('/auth/login');
+function requireAuth(req, res, next) {
+    try {
+        const token = req.cookies?.uid;
+
+        if (!token) {
+            return res.status(401).json({
+                message: 'Authentication required'
+            });
+        }
+
+        const user = getUser(token);
+
+        if (!user) {
+            return res.status(401).json({
+                message: 'Invalid or expired token'
+            });
+        }
+
+        req.user = user;
+        next();
+    } catch (err) {
+        console.error(err);
+        return res.status(401).json({
+            message: 'Authentication failed'
+        });
     }
-    const user = getUser(token);
-    if (!user) {
-        return res.redirect('/auth/login');
-    }
-    req.user = user;
-    return next();
 }
 
 function restrictTo(roles = []) {
-    return function (req, res, next) {
-        if (!req.user) return res.redirect('/login');
+    return (req, res, next) => {
+        if (!req.user) {
+            return res.status(401).json({
+                message: 'Authentication required'
+            });
+        }
 
-        if (!roles.includes(req.user.role)) return res.status(403).end('Access denied');
+        if (!roles.includes(req.user.role)) {
+            return res.status(403).json({
+                message: 'Access denied'
+            });
+        }
 
-        return next();
-    }
+        next();
+    };
 }
 
 module.exports = {
-    checkAuth,
+    requireAuth,
     restrictTo
 };

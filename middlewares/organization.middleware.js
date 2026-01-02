@@ -1,28 +1,28 @@
-const StudentProfile = require('../models/student_profile');
+const OrganizationProfile = require('../models/organization_profile');
 
-async function attachStudentProfile(req, res, next) {
+async function attachOrganizationProfile(req, res, next) {
     try {
         if (!req.user) {
             return res.status(401).json({ message: 'Authentication required' });
         }
 
-        const profile = await StudentProfile.findOne({
+        const profile = await OrganizationProfile.findOne({
             userId: req.user._id
         });
 
         if (!profile) {
             return res.status(404).json({
-                message: 'Student profile not found. Please create profile first.'
+                message: 'Organization profile not found. Please create profile first.'
             });
         }
 
-        if (profile.isSuspended) {
+        if (!profile.isVerified) {
             return res.status(403).json({
-                message: 'Student profile is suspended'
+                message: 'Organization profile is not verified'
             });
         }
 
-        req.profile = profile;
+        req.organizationProfile = profile;
         next();
     } catch (err) {
         console.error(err);
@@ -31,9 +31,5 @@ async function attachStudentProfile(req, res, next) {
 }
 
 module.exports = {
-    attachStudentProfile
-};
-
-module.exports = {
-    attachStudentProfile
+    attachOrganizationProfile
 };
