@@ -7,7 +7,7 @@ async function attachOrganizationProfile(req, res, next) {
         }
 
         const profile = await OrganizationProfile.findOne({
-            userId: req.user._id
+            userId: req.user.id
         });
 
         if (!profile) {

@@ -11,7 +11,8 @@ const {
     getPendingTasks,
     approveTask,
     rejectTask,
-    overrideSubmission
+    overrideSubmission,
+    createMasterSkill
 } = require('../controllers/admin.controller');
 
 const { requireAuth, restrictTo } = require('../middlewares/auth.middleware');
@@ -36,5 +37,13 @@ router.patch('/tasks/:taskId/reject', rejectTask);
 
 // Admin override submission
 router.patch('/submissions/:submissionId/override', overrideSubmission);
+
+router.post(
+    '/master-skills',
+    requireAuth,
+    restrictTo(['ADMIN']),
+    createMasterSkill
+);
+
 
 module.exports = router;

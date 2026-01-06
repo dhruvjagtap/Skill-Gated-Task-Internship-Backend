@@ -7,7 +7,7 @@ async function attachStudentProfile(req, res, next) {
         }
 
         const profile = await StudentProfile.findOne({
-            userId: req.user._id
+            userId: req.user.id
         });
 
         if (!profile) {

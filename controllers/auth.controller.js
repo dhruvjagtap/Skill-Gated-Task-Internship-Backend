@@ -1,17 +1,14 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
-const { setUser, registerUser } = require('../services/auth.service');
+const { setUser } = require('../services/auth.service');
 
 async function register(req, res) {
     try {
-        const { name, email, password, role } = req.body;
+        const { name, email, password } = req.body;
+        const role = req.role;
 
         if (!name || !email || !password || !role) {
             return res.status(400).json({ message: 'All fields are required' });
-        }
-
-        if (!['STUDENT', 'ORGANIZATION', 'ADMIN'].includes(role)) {
-            return res.status(400).json({ message: 'Invalid role' });
         }
 
         const existingUser = await User.findOne({ email });
@@ -73,7 +70,8 @@ async function login(req, res) {
             sameSite: 'strict',
             secure: false, // true in production (HTTPS)
             maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
-        });
+        })
+        // req.headers.authorization?.split(' ')[1];
 
         return res.status(200).json({
             message: 'Login successful',

@@ -2,7 +2,7 @@ const { getUser } = require('../services/auth.service');
 
 function requireAuth(req, res, next) {
     try {
-        const token = req.cookies?.uid;
+        const token = req.cookies?.access_token;
 
         if (!token) {
             return res.status(401).json({

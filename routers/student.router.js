@@ -12,11 +12,10 @@ const {
 const { requireAuth, restrictTo } = require('../middlewares/auth.middleware');
 const { attachStudentProfile } = require('../middlewares/student.middleware');
 
-/**
- * All student routes:
- * - require authentication
- * - require STUDENT role
- */
+
+//  All student routes:
+//  - require authentication
+//  - require STUDENT role
 router.use(requireAuth, restrictTo(['STUDENT']));
 
 // Profile

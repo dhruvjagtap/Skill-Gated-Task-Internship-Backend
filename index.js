@@ -8,10 +8,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const connectToMongoDB = require('./services/mongoConnection');
-const staticRouter = require('./routers/static.router');
+// const staticRouter = require('./routers/static.router');
 const authRouter = require('./routers/auth.router');
 const studentRouter = require('./routers/student.router');
-const { checkAuth } = require('./middlewares/auth.middleware');
+const orgRouter = require('./routers/org.router');
+const adminRouter = require('./routers/admin.routes');
 
 /* ------------------ DB ------------------ */
 connectToMongoDB(process.env.MONGO_URI);
@@ -31,14 +32,16 @@ app.use(cookieParser());
 app.use(express.static('public'));
 
 /* ------------------ ROUTES ------------------ */
-app.use('/', staticRouter);
+// app.use('/', staticRouter);
 app.use('/auth', authRouter);
 app.use('/student', studentRouter);
+app.use('/org', orgRouter);
+app.use('/admin', adminRouter);
 
 
-app.get('/', checkAuth, (req, res) => {
-    res.render('home', { layout: false }); // home has NO dashboard
-});
+// app.get('/', checkAuth, (req, res) => {
+//     res.render('home', { layout: false }); // home has NO dashboard
+// });
 /* ------------------ SERVER ------------------ */
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);

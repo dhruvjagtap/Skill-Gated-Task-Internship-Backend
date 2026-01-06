@@ -40,7 +40,7 @@
 - API Testing
 - Removing SSR making clean Rest API
 
-## Day 2 – Completed all the necessary routes
+## Day 3 – Completed all the necessary routes
 
 ### Completed
 - Removed SSR
@@ -54,3 +54,61 @@
 
 ### Next Plan
 - API Testing
+
+## Day 4 – Completed Task Life cycle
+
+### Completed
+- Student can sumbit task
+- Organization can review submitted task
+- Admin can override the submitted task if organization does not review it.
+
+### Issues Faced
+- None
+
+### Learnings
+- Clean API
+
+### Next Plan
+- API Testing
+
+## Day 5 – API testing
+
+### In progress
+- Manual API testing
+
+### Issues Faced
+- Do not use ._id when accessing data from req
+
+### Learnings
+- Never do too many things on a single day.
+
+### Next Plan
+- API Testing
+
+## Day 6 – API testing
+
+### In progress
+- Manual API testing
+
+### Issues Faced
+- Doing transactions on Mongod instead use mongos or replica set members
+
+### Learnings
+- Take care of replica if implemented transactions
+
+### Next Plan
+- API Testing
+
+## Day 7 – Completed API testing
+
+### Completed API testing
+- Manual API testing
+
+### Issues Faced
+- Doing transactions on Mongod instead use mongos or replica set members
+
+### Learnings
+- The more you test the better will be your application
+
+### Next Plan
+- Swagger (OpenAPI) documentation

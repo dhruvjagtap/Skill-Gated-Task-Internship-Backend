@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const StudentProfile = require('../models/student_profile');
-const { checkAuth, restrictTo } = require('../middlewares/auth.middleware');
-const { attachStudentProfile } = require('../middlewares/students.middleware');
+const { restrictTo, requireAuth } = require('../middlewares/auth.middleware');
+const { attachStudentProfile } = require('../middlewares/student.middleware');
 
 // Auth pages
 router.get('/auth/login', (req, res) => {
@@ -28,7 +28,7 @@ router.get('/auth/register/org', (req, res) => {
 });
 
 // Student dashboard
-router.get('/student/dashboard', checkAuth, restrictTo(['STUDENT']), attachStudentProfile, async (req, res) => {
+router.get('/student/dashboard', requireAuth, restrictTo(['STUDENT']), attachStudentProfile, async (req, res) => {
     try {
         const user = req.user;
 

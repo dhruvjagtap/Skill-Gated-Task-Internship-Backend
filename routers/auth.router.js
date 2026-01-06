@@ -8,24 +8,30 @@ const {
     me
 } = require('../controllers/auth.controller');
 
-const { requireAuth, restrictTo } = require('../middlewares/auth.middleware');
+const { requireAuth } = require('../middlewares/auth.middleware');
 
-// POST /auth/student/register
-// POST /auth/org/register
-// POST /auth/admin/create   (protected, admin-only later)
-// POST /auth/login
-// POST /auth/logout
-// GET  /auth/me
+router.post('/student/register',
+    (req, res, next) => {
+        req.role = 'STUDENT';
+        next();
+    },
+    register
+);
+
+router.post('/org/register',
+    (req, res, next) => {
+        req.role = 'ORGANIZATION';
+        next();
+    },
+    register
+);
 
 
-router.post('/student/register', register);
-router.post('/org/register', register);
-
-// Admin creation should be protected
-router.post(
-    '/admin/create',
-    requireAuth,
-    // restrictTo(['ADMIN']),
+router.post('/admin/create',
+    (req, res, next) => {
+        req.role = 'ADMIN';
+        next();
+    },
     register
 );
 

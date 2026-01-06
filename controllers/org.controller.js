@@ -2,12 +2,13 @@ const OrganizationProfile = require('../models/organization_profile');
 const Task = require('../models/task');
 const Application = require('../models/application');
 const StudentProfile = require('../models/student_profile');
-
+const Submission = require('../models/submission');
+const mongoose = require('mongoose')
 
 async function createOrganizationProfile(req, res) {
     try {
         const { description } = req.body;
-        const userId = req.user._id;
+        const userId = req.user.id;
 
         if (!description || description.length < 20) {
             return res.status(400).json({ message: 'Description too short' });
@@ -17,6 +18,8 @@ async function createOrganizationProfile(req, res) {
         if (existing) {
             return res.status(400).json({ message: 'Profile already exists' });
         }
+
+        console.log(existing);
 
         const profile = await OrganizationProfile.create({
             userId,
@@ -43,7 +46,7 @@ async function createTask(req, res) {
             return res.status(403).json({ message: 'Organization not verified' });
         }
 
-        if (!title || !payout || !durationInDays) {
+        if (!title || !payout || !durationInDays || !Array.isArray(requiredSkills) || requiredSkills.length === 0) {
             return res.status(400).json({ message: 'Missing required fields' });
         }
 
@@ -100,8 +103,6 @@ async function getApplicantsForTask(req, res) {
 
 // POST /org/tasks/:taskId/applications/:applicationId/accept
 
-const mongoose = require('mongoose');
-
 async function acceptApplication(req, res) {
     const session = await mongoose.startSession();
 
@@ -147,7 +148,11 @@ async function acceptApplication(req, res) {
 
         //  Reject remaining applications
         await Application.updateMany(
-            { taskId, status: 'APPLIED' },
+            {
+                taskId,
+                _id: { $ne: applicationId },
+                status: 'APPLIED'
+            },
             { status: 'REJECTED' },
             { session }
         );
@@ -190,11 +195,7 @@ async function rejectApplication(req, res) {
         const { applicationId } = req.params;
         const orgId = req.organizationProfile._id;
 
-        const application = await Application.findOneAndUpdate(
-            { _id: applicationId },
-            { status: 'REJECTED' },
-            { new: true }
-        );
+        const application = await Application.findById(applicationId);
 
         if (!application) {
             return res.status(404).json({ message: 'Application not found' });
@@ -208,6 +209,9 @@ async function rejectApplication(req, res) {
         if (!task) {
             return res.status(403).json({ message: 'Not authorized' });
         }
+
+        application.status = 'REJECTED';
+        await application.save();
 
         return res.status(200).json({
             message: 'Application rejected',
@@ -244,7 +248,7 @@ async function reviewSubmission(req, res) {
         if (!task) throw new Error('Unauthorized or invalid task state');
 
         submission.status = action === 'APPROVE' ? 'APPROVED' : 'REJECTED';
-        submission.reviewedBy = req.user._id;
+        submission.reviewedBy = req.user.id;
 
         task.status = submission.status;
 

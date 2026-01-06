@@ -230,9 +230,9 @@ Server will run at http://localhost:3000
 - [x] Academic safety rules
 
 ### Phase 2 – Developer Experience
-- [ ] Postman collection for API testing
+- [x] Postman collection for API testing
 - [ ] Swagger (OpenAPI) documentation
-- [ ] Centralized error & logging improvements
+- [ ] Centralized error & logging improvements (optional)
 
 ### Phase 3 – Platform Expansion
 - [ ] Payment integration (mock → real)

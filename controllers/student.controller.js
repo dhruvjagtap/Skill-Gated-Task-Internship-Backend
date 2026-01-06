@@ -8,7 +8,16 @@ const Submission = require('../models/submission');
 async function createProfile(req, res) {
     try {
         const { university, degree, yearOfStudy } = req.body;
-        const userId = req.user._id;
+        const userId = req.user.id;
+
+        // console.log('REQ.USER:', req.user);
+        // console.log('REQ.USER._ID:', req.user.id);
+
+
+        if (!university || !degree || !yearOfStudy) {
+            return res.status(400).json({ message: 'All fields are required' });
+        }
+
 
         const existing = await StudentProfile.findOne({ userId });
         if (existing) {
@@ -127,6 +136,7 @@ async function applyForTask(req, res) {
             return res.status(403).json({ message: 'Missing required skills' });
         }
 
+        // TODO: Add pagination later 
 
         // ---- Prevent Duplicate Applications ----
         const existingApplication = await Application.findOne({
@@ -192,6 +202,11 @@ async function submitTask(req, res) {
             assignedStudent: studentId,
             status: 'IN_PROGRESS'
         });
+
+        if (!submissionLink) {
+            return res.status(400).json({ message: 'Submission link required' });
+        }
+
 
         if (!task) {
             return res.status(404).json({

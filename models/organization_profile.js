@@ -7,10 +7,6 @@ const organizationSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    organizationName: {
-        type: String,
-        required: true
-    },
 
     description: {
         type: String,

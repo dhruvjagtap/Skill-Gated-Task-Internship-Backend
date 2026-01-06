@@ -1,14 +1,18 @@
+const mongoose = require('mongoose');
+const StudentProfile = require('../models/student_profile');
 const Skill = require('../models/skill');
 const OrganizationProfile = require('../models/organization_profile');
 const Task = require('../models/task');
 const Submission = require('../models/submission');
-
+const MasterSkill = require('../models/master_skill');
 
 async function getPendingSkills(req, res) {
     try {
         const skills = await Skill.find({ status: 'PENDING' })
             .populate('studentId', 'userId')
             .populate('skillId', 'name category');
+
+        // TODO: Add page & limit
 
         return res.status(200).json({
             count: skills.length,
@@ -35,6 +39,8 @@ async function approveSkill(req, res) {
             },
             { new: true }
         );
+
+        console.log(skill);
 
         if (!skill) {
             return res.status(404).json({ message: 'Skill not found or already processed' });
@@ -137,6 +143,11 @@ async function rejectOrganization(req, res) {
     try {
         const { organizationId } = req.params;
         const { rejectionReason } = req.body;
+
+        if (!rejectionReason) {
+            return res.status(400).json({ message: 'Rejection reason required' });
+        }
+
 
         const organization = await OrganizationProfile.findOneAndUpdate(
             { _id: organizationId, verificationStatus: 'PENDING' },
@@ -252,6 +263,11 @@ async function overrideSubmission(req, res) {
         const task = await Task.findById(submission.taskId).session(session);
         if (!task) throw new Error('Task not found');
 
+        if (!['APPROVE', 'REJECT'].includes(action)) {
+            throw new Error('Invalid override action');
+        }
+
+
         submission.status = action === 'APPROVE' ? 'APPROVED' : 'REJECTED';
         submission.reviewedBy = req.user._id;
 
@@ -289,6 +305,40 @@ async function overrideSubmission(req, res) {
     }
 }
 
+async function createMasterSkill(req, res) {
+    try {
+        const { name, category, description } = req.body;
+
+        if (!name || !category) {
+            return res.status(400).json({
+                message: 'Name and category are required'
+            });
+        }
+
+        const exists = await MasterSkill.findOne({ name });
+        if (exists) {
+            return res.status(400).json({
+                message: 'Master skill already exists'
+            });
+        }
+
+        const skill = await MasterSkill.create({
+            name,
+            category,
+            description,
+            createdBy: req.user._id // ADMIN
+        });
+
+        res.status(201).json({
+            message: 'Master skill created',
+            skill
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
 
 module.exports = {
     getPendingSkills,
@@ -300,7 +350,8 @@ module.exports = {
     getPendingTasks,
     approveTask,
     rejectTask,
-    overrideSubmission
+    overrideSubmission,
+    createMasterSkill
 };
 
 // Student

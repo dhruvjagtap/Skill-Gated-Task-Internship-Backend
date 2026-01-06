@@ -9,7 +9,8 @@ const {
     createTask,
     getApplicantsForTask,
     acceptApplication,
-    rejectApplication
+    rejectApplication,
+    reviewSubmission
 } = require('../controllers/org.controller');
 
 // All organization routes:

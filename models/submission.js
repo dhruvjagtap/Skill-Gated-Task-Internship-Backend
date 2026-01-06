@@ -1,4 +1,4 @@
-const mongooose = require('mongoose');
+const mongoose = require('mongoose');
 
 const submissionSchema = new mongoose.Schema({
     taskId: {
@@ -27,5 +27,5 @@ const submissionSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-const Submission = mongooose.model('Submission', submissionSchema);
+const Submission = mongoose.model('Submission', submissionSchema);
 module.exports = Submission;
