@@ -1,0 +1,487 @@
+{
+	"info": {
+		"_postman_id": "f300dcd5-3ef9-4ce8-8172-2f7693ee5627",
+		"name": "Skill Gated task & Internship",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "38201782"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register Student",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Register Org",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Org one\",\n  \"email\": \"{{org_email}}\",\n  \"password\": \"{{password}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/auth/org/register"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Admin one\",\n  \"email\": \"{{admin_email}}\",\n  \"password\": \"{{password}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/auth/admin/create"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Student",
+			"item": [
+				{
+					"name": "Student Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{student_email}}\",\n    \"password\": \"{{password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Student Profile",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"university\": \"ABC University\",\n  \"degree\": \"B.Tech Computer Science\",\n  \"yearOfStudy\": 3\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/student/profile"
+					},
+					"response": []
+				},
+				{
+					"name": "Request Skill Verification",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"skillId\": \"695913e5c5c8959871a0b169\",\n    \"proof\": \"https://github.com/dhruvjagtap\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/student/skills"
+					},
+					"response": []
+				},
+				{
+					"name": "Apply for a task",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/student/tasks/:taskId/apply",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"student",
+								"tasks",
+								":taskId",
+								"apply"
+							],
+							"variable": [
+								{
+									"key": "taskId",
+									"value": "695a2b80116bfaffccd60937"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Applied Tasks",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Submit task",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{admin_email}}\",\n    \"password\": \"{{password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Master Skill",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Node.js\",\n  \"category\": \"BACKEND\",\n  \"description\": \"Server-side JavaScript runtime\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/admin/master-skills"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pending Skills",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"university\": \"ABC University\",\n  \"degree\": \"B.Tech Computer Science\",\n  \"yearOfStudy\": 3\n}\n"
+						},
+						"url": "{{base_url}}/admin/skills"
+					},
+					"response": []
+				},
+				{
+					"name": "Approve Skills",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/admin/skills/:skillId/approve",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"admin",
+								"skills",
+								":skillId",
+								"approve"
+							],
+							"variable": [
+								{
+									"key": "skillId",
+									"value": "6959164b93bf9efaf8b1b9ec"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pending Org's",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/admin/organizations"
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Org",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/admin/organizations/:organizationId/approve",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"admin",
+								"organizations",
+								":organizationId",
+								"approve"
+							],
+							"variable": [
+								{
+									"key": "organizationId",
+									"value": "695a276489cbd4bbe1d0a895"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Tasks",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/admin/tasks/:taskId/approve",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"admin",
+								"tasks",
+								":taskId",
+								"approve"
+							],
+							"variable": [
+								{
+									"key": "taskId",
+									"value": "695a2b80116bfaffccd60937"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Force approve/reject submission",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Org",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{org_email}}\",\n    \"password\": \"{{password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Create profile",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"jsncomocopkondjindocokoplsdo[ps[pl\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/org/profile"
+					},
+					"response": []
+				},
+				{
+					"name": "Create tasks",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Build REST API using Node.js\",\n  \"description\": \"Create secure REST APIs using Express and MongoDB\",\n  \"requiredSkills\": [\n    \"695913e5c5c8959871a0b169\"\n  ],\n  \"payout\": 5000,\n  \"durationInDays\": 14\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/org/tasks"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Applicants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/org/tasks/:taskId/applicants",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"org",
+								"tasks",
+								":taskId",
+								"applicants"
+							],
+							"variable": [
+								{
+									"key": "taskId",
+									"value": "695a2b80116bfaffccd60937"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve application",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/org/tasks/:taskId/applications/:applicationId/accept",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"org",
+								"tasks",
+								":taskId",
+								"applications",
+								":applicationId",
+								"accept"
+							],
+							"variable": [
+								{
+									"key": "taskId",
+									"value": "695a2b80116bfaffccd60937"
+								},
+								{
+									"key": "applicationId",
+									"value": "695a2e13116bfaffccd60941"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve task submission",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": {}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": ""
+		},
+		{
+			"key": "student_email",
+			"value": ""
+		},
+		{
+			"key": "org_email",
+			"value": ""
+		},
+		{
+			"key": "admin_email",
+			"value": ""
+		},
+		{
+			"key": "password",
+			"value": ""
+		}
+	]
+}

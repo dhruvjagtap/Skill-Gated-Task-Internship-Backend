@@ -6,6 +6,8 @@ A backend system that enables students to earn and gain experience through skill
 ![status](https://img.shields.io/badge/status-Development-blue)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose-brightgreen)
 
+> Note: This project intentionally focuses on backend system design and engineering. Frontend, payments, and large-scale deployment are documented as future extensions to avoid unnecessary scope expansion.
+
 ## <b>Project Motivation & Problem Statement</b>
 
 Today, many students seek practical experience and income through freelancing platforms. However, most existing platforms are **unstructured**, **academically unsafe**, and **skill-unverified**. Students often take on open-ended work, compete unfairly, or overwork themselves at the cost of their academics.
@@ -74,17 +76,14 @@ It reflects how platforms like internship portals, internal task systems, or con
 - Role-based access control (RBAC)
 - Secure password hashing (bcrypt)
 - Environment-based configuration
-
-### In Progress
 - Skill verification workflows
 - Task & internship management APIs
 - Academic protection rules
 - Admin approval & moderation logic
+- Postman API collection
 
 ### Upcoming
-- Postman API collection
 - Swagger (OpenAPI) documentation
-
 
 ## <b>Tech Stack</b>
 
@@ -129,7 +128,7 @@ Created → Open → In Progress → Submitted → Approved / Rejected
 
 - Max tasks per student per week
 - Max concurrent active tasks
-- Automatic task lock during exam periods (mocked logic)
+- Automatic task lock during exam periods (mocked / configurable logic)
 - Applications rejected if limits exceeded
 
 ## <b>API Overview </b>
@@ -175,15 +174,17 @@ POST /api/admin/users/block
 
 ## <b>Project Structure</b>
 ```
-├── controllers/
-├── models/
-├── routes/
-├── middleware/
-├── services/
-├── utils/
-├── views/
-├── index.js
-└── server.js
+├── controllers/        Request handlers (business logic)
+├── routers/            Express route definitions
+├── middlewares/        Auth & role-based guards
+├── models/             Mongoose schemas
+├── services/           DB & reusable services
+├── utils/              Helpers & constants
+├── views/              EJS templates
+├── index.js            App entry point
+├── package.json
+└── Skill Gated task & Internship.postman_collection.json
+
 ```
 ## <b>Environment Variables</b>
 
@@ -221,30 +222,79 @@ Server will run at http://localhost:3000
 - Manual role-based testing
 - Validation & error scenarios covered
 
+## Postman API Collection
+
+This repository includes a fully tested Postman collection:
+
+**`Skill Gated task & Internship.postman_collection.json`**
+
+### What’s Included
+- Authentication flows (Student / Organization / Admin)
+- JWT-protected routes
+- Skill verification workflows
+- Task & internship lifecycle APIs
+- Role-based access validation
+- Error & edge-case testing
+
+### How to Use
+1. Open Postman
+2. Click **Import**
+3. Select the JSON file from the repository
+4. Set environment variables:
+   - `base_url` → `http://localhost:3000`
+   - `token` → JWT token after login
+
+This collection can be used by reviewers or developers to test the entire API without manual setup.
+
 ## <b>Roadmap</b>
 
-### Phase 1 – Core Backend (Current)
-- [x] Authentication & RBAC 
-- [x] Skill verification system
-- [x] Task & internship lifecycle
-- [x] Academic safety rules
+### Phase 1 – Core Backend (Completed)
 
-### Phase 2 – Developer Experience
-- [x] Postman collection for API testing
-- [ ] Swagger (OpenAPI) documentation
-- [ ] Centralized error & logging improvements (optional)
+> **This phase represents the fully functional, internship-ready backend system.**
 
-### Phase 3 – Platform Expansion
-- [ ] Payment integration (mock → real)
-- [ ] Notification system (email / in-app)
-- [ ] React-based admin & user dashboards
-- [ ] Advanced analytics & reporting
+* [x] JWT-based authentication & role-based access control (Student / Organization / Admin)
+* [x] Skill verification & skill-gated task access
+* [x] Task & internship lifecycle management
+* [x] Secure task application & submission workflow
+* [x] Academic safety rules (weekly limits, concurrency limits)
+* [x] Admin verification & override controls
+* [x] MongoDB transactional task assignment
+* [x] Modular MVC architecture
 
-### Phase 4 – Production Readiness
-- [ ] Rate limit tuning
-- [ ] Caching strategies
-- [ ] Deployment (Docker / cloud)
+**This phase alone is sufficient for internship evaluation and backend assessment.**
 
+---
+
+### Phase 2 – Developer Experience & Maintainability (In Progress / Optional)
+
+> Improves usability, debugging, and onboarding for developers.
+
+* [x] Postman collection for API testing
+* [ ] Swagger (OpenAPI) interactive API documentation
+* [ ] Centralized error handling & validation layer
+* [ ] Structured logging (optional)
+
+*These enhancements improve clarity but do not affect core functionality.*
+
+---
+
+### Phase 3 – Future Enhancements (Planned, Not Required)
+
+> These features are intentionally deferred to avoid scope creep.
+
+* [ ] Mock payment & payout workflow (extensible design)
+* [ ] Notification system (email / in-app – mock)
+* [ ] Admin & user dashboards (React / frontend)
+* [ ] Platform analytics & reporting
+
+### Phase 4 – Production & Scalability (Conceptual)
+
+> Architectural considerations for real-world deployment.
+
+* [ ] Rate limiting & abuse protection
+* [ ] Caching strategies for read-heavy endpoints
+* [ ] Dockerized deployment & cloud hosting
+* [ ] Health check & monitoring endpoints
 
 ## <b>License</b>
 
